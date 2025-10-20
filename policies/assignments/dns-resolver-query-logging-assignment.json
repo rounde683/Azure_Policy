@@ -1,0 +1,22 @@
+{
+  "name": "dns-resolver-query-logging-assignment",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "properties": {
+    "displayName": "Enforce DNS Resolver Query Logging to Storage",
+    "description": "Assignment for DNS Resolver query logging policy to ensure all DNS resolvers have query logging enabled and stored in Azure Storage",
+    "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/dns-resolver-query-logging-policy",
+    "scope": "/subscriptions/{subscription-id}",
+    "parameters": {
+      "effect": {
+        "value": "Deny"
+      },
+      "requiredStorageAccountResourceGroup": {
+        "value": "rg-dns-logging"
+      },
+      "allowedStorageAccountPrefix": {
+        "value": "dnsquerylog"
+      }
+    },
+    "enforcementMode": "Default"
+  }
+}

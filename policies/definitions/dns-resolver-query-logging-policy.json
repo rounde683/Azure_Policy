@@ -1,0 +1,76 @@
+{
+  "if": {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Network/dnsResolvers"
+      },
+      {
+        "anyOf": [
+          {
+            "field": "Microsoft.Network/dnsResolvers/virtualNetworkLinks[*].virtualNetwork.id",
+            "exists": "true"
+          },
+          {
+            "field": "Microsoft.Network/dnsResolvers/inboundEndpoints[*]",
+            "exists": "true"
+          }
+        ]
+      },
+      {
+        "not": {
+          "allOf": [
+            {
+              "field": "Microsoft.Network/dnsResolvers/queryLoggingConfig.enabled",
+              "equals": "true"
+            },
+            {
+              "field": "Microsoft.Network/dnsResolvers/queryLoggingConfig.destinations[*].storageAccount.resourceId",
+              "exists": "true"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "then": {
+    "effect": "[parameters('effect')]"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    },
+    "requiredStorageAccountResourceGroup": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Required Storage Account Resource Group",
+        "description": "The resource group where the storage account for DNS query logging should be located"
+      },
+      "defaultValue": ""
+    },
+    "allowedStorageAccountPrefix": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Allowed Storage Account Name Prefix",
+        "description": "Prefix that storage accounts must have for DNS query logging"
+      },
+      "defaultValue": "dnsquerylog"
+    }
+  },
+  "metadata": {
+    "displayName": "DNS Resolver Query logging must be enabled and stored in Azure Storage",
+    "description": "This policy ensures that Azure DNS Resolvers have query logging enabled and configured to store logs in Azure Storage accounts. DNS query logging provides visibility into DNS resolution activities and helps with security monitoring, troubleshooting, and compliance requirements.",
+    "category": "Network",
+    "version": "1.0.0"
+  }
+}
