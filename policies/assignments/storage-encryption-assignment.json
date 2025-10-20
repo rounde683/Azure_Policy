@@ -1,0 +1,15 @@
+{
+  "name": "storage-encryption-assignment",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "properties": {
+    "displayName": "Enforce Storage Account Encryption",
+    "description": "Assignment for storage account encryption policy",
+    "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/storage-encryption-policy",
+    "scope": "/subscriptions/{subscription-id}",
+    "parameters": {
+      "effect": {
+        "value": "Audit"
+      }
+    }
+  }
+}

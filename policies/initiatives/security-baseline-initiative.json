@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "displayName": "Security Baseline Initiative",
+    "description": "A collection of security policies for baseline compliance including storage encryption and backup protection",
+    "metadata": {
+      "category": "Security"
+    },
+    "policyDefinitions": [
+      {
+        "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/storage-encryption-policy",
+        "parameters": {
+          "effect": {
+            "value": "Audit"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/backup-soft-delete-policy",
+        "parameters": {
+          "effect": {
+            "value": "Deny"
+          }
+        }
+      }
+    ]
+  }
+}

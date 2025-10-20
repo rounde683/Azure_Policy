@@ -1,0 +1,101 @@
+{
+    "folders": [
+        {
+            "name": "Azure Policy Workspace",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "powershell.codeFormatting.preset": "OTBS",
+        "powershell.scriptAnalysis.enable": true,
+        "json.schemas": [
+            {
+                "fileMatch": [
+                    "policies/definitions/*.json"
+                ],
+                "url": "https://raw.githubusercontent.com/Azure/azure-policy/master/schemas/policy-definition-schema.json"
+            },
+            {
+                "fileMatch": [
+                    "policies/assignments/*.json"
+                ],
+                "url": "https://raw.githubusercontent.com/Azure/azure-policy/master/schemas/policy-assignment-schema.json"
+            }
+        ],
+        "files.associations": {
+            "*.bicep": "bicep"
+        },
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode.powershell",
+            "ms-azuretools.vscode-bicep",
+            "redhat.vscode-yaml",
+            "ms-vscode.azure-repos"
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Validate Policies",
+                "type": "shell",
+                "command": "powershell",
+                "args": [
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    "./scripts/Test-PolicyDefinitions.ps1"
+                ],
+                "group": "test",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Run Unit Tests",
+                "type": "shell",
+                "command": "powershell",
+                "args": [
+                    "-Command",
+                    "Invoke-Pester -Path './tests/unit'"
+                ],
+                "group": "test",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Setup Development Environment",
+                "type": "shell",
+                "command": "powershell",
+                "args": [
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    "./scripts/Setup-DevEnvironment.ps1"
+                ],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            }
+        ]
+    }
+}

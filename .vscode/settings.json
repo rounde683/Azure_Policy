@@ -1,0 +1,12 @@
+{
+    "powershell.scriptAnalysis.enable":  true,
+    "powershell.codeFormatting.preset":  "OTBS",
+    "json.schemas":  [
+                         {
+                             "fileMatch":  [
+                                               "policies/definitions/*.json"
+                                           ],
+                             "url":  "https://raw.githubusercontent.com/Azure/azure-policy/master/schemas/policy-definition-schema.json"
+                         }
+                     ]
+}

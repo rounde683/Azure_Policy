@@ -1,0 +1,16 @@
+{
+  "name": "backup-soft-delete-assignment",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "properties": {
+    "displayName": "Enforce Recovery Services vault soft delete",
+    "description": "Assignment for Recovery Services vault soft delete policy",
+    "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/backup-soft-delete-policy",
+    "scope": "/subscriptions/{subscription-id}",
+    "parameters": {
+      "effect": {
+        "value": "Deny"
+      }
+    },
+    "enforcementMode": "Default"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "if": {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.RecoveryServices/vaults"
+      },
+      {
+        "anyOf": [
+          {
+            "field": "Microsoft.RecoveryServices/vaults/securitySettings.softDeleteSettings.softDeleteState",
+            "notEquals": "Enabled"
+          },
+          {
+            "field": "Microsoft.RecoveryServices/vaults/securitySettings.softDeleteSettings.softDeleteState",
+            "exists": "false"
+          }
+        ]
+      }
+    ]
+  },
+  "then": {
+    "effect": "[parameters('effect')]"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    }
+  },
+  "metadata": {
+    "displayName": "Recovery Services vaults should have soft delete enabled",
+    "description": "This policy ensures that Azure Recovery Services vaults have soft delete enabled to protect backup data from accidental or malicious deletion. Soft delete provides additional protection by retaining deleted backup data for a specified period.",
+    "category": "Backup",
+    "version": "1.0.0"
+  }
+}
