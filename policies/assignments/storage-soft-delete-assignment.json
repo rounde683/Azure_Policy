@@ -1,0 +1,22 @@
+{
+  "name": "storage-soft-delete-assignment",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "properties": {
+    "displayName": "Enforce Storage Account Soft Delete",
+    "description": "Assignment for storage account soft delete policy to ensure all storage accounts have soft delete enabled for blobs and containers",
+    "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/storage-soft-delete-policy",
+    "scope": "/subscriptions/{subscription-id}",
+    "parameters": {
+      "effect": {
+        "value": "Deny"
+      },
+      "minimumRetentionDays": {
+        "value": 30
+      },
+      "requiredForContainers": {
+        "value": true
+      }
+    },
+    "enforcementMode": "Default"
+  }
+}

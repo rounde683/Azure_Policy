@@ -1,0 +1,84 @@
+{
+  "if": {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Storage/storageAccounts"
+      },
+      {
+        "anyOf": [
+          {
+            "field": "Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.enabled",
+            "notEquals": "true"
+          },
+          {
+            "field": "Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.enabled",
+            "exists": "false"
+          },
+          {
+            "field": "Microsoft.Storage/storageAccounts/blobServices/containerDeleteRetentionPolicy.enabled",
+            "notEquals": "true"
+          },
+          {
+            "field": "Microsoft.Storage/storageAccounts/blobServices/containerDeleteRetentionPolicy.enabled",
+            "exists": "false"
+          },
+          {
+            "allOf": [
+              {
+                "field": "Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.days",
+                "exists": "true"
+              },
+              {
+                "field": "Microsoft.Storage/storageAccounts/blobServices/deleteRetentionPolicy.days",
+                "less": "[parameters('minimumRetentionDays')]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "then": {
+    "effect": "[parameters('effect')]"
+  },
+  "parameters": {
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Enable or disable the execution of the policy"
+      },
+      "allowedValues": [
+        "Audit",
+        "Deny",
+        "Disabled"
+      ],
+      "defaultValue": "Deny"
+    },
+    "minimumRetentionDays": {
+      "type": "Integer",
+      "metadata": {
+        "displayName": "Minimum Retention Days",
+        "description": "The minimum number of days to retain soft deleted blobs and containers"
+      },
+      "defaultValue": 7,
+      "minValue": 1,
+      "maxValue": 365
+    },
+    "requiredForContainers": {
+      "type": "Boolean",
+      "metadata": {
+        "displayName": "Require Soft Delete for Containers",
+        "description": "Whether soft delete should be required for containers in addition to blobs"
+      },
+      "defaultValue": true
+    }
+  },
+  "metadata": {
+    "displayName": "Storage accounts should have soft delete enabled for blobs and containers",
+    "description": "This policy ensures that Azure Storage accounts have soft delete enabled for both blobs and containers to protect against accidental or malicious deletion. Soft delete allows recovery of deleted data within a specified retention period, providing an additional layer of data protection.",
+    "category": "Storage",
+    "version": "1.0.0"
+  }
+}

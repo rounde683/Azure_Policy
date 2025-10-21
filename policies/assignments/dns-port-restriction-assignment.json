@@ -1,0 +1,32 @@
+{
+  "name": "dns-port-restriction-assignment",
+  "type": "Microsoft.Authorization/policyAssignments",
+  "properties": {
+    "displayName": "Enforce DNS Port 53 Traffic Restrictions",
+    "description": "Assignment for DNS port restriction policy to ensure DNS servers only allow traffic on port 53 UDP and TCP for DNS resolution and authorized zone transfers",
+    "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/dns-port-restriction-policy",
+    "scope": "/subscriptions/{subscription-id}",
+    "parameters": {
+      "effect": {
+        "value": "Deny"
+      },
+      "allowedSourceIpRanges": {
+        "value": [
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16"
+        ]
+      },
+      "authorizedZoneTransferIps": {
+        "value": [
+          "10.0.1.4",
+          "10.0.1.5"
+        ]
+      },
+      "requireNetworkSecurityGroups": {
+        "value": true
+      }
+    },
+    "enforcementMode": "Default"
+  }
+}

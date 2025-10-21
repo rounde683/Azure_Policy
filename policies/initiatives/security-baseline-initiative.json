@@ -1,7 +1,7 @@
 {
   "properties": {
     "displayName": "Security Baseline Initiative",
-    "description": "A collection of security policies for baseline compliance including storage encryption and backup protection",
+    "description": "A comprehensive collection of security policies for baseline compliance including storage encryption, storage soft delete, backup protection, and DNS security controls",
     "metadata": {
       "category": "Security"
     },
@@ -15,10 +15,49 @@
         }
       },
       {
+        "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/storage-soft-delete-policy",
+        "parameters": {
+          "effect": {
+            "value": "Deny"
+          },
+          "minimumRetentionDays": {
+            "value": 30
+          },
+          "requiredForContainers": {
+            "value": true
+          }
+        }
+      },
+      {
         "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/backup-soft-delete-policy",
         "parameters": {
           "effect": {
             "value": "Deny"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/dns-resolver-query-logging-policy",
+        "parameters": {
+          "effect": {
+            "value": "Deny"
+          },
+          "requiredStorageAccountResourceGroup": {
+            "value": "rg-dns-logging"
+          },
+          "allowedStorageAccountPrefix": {
+            "value": "dnsquerylog"
+          }
+        }
+      },
+      {
+        "policyDefinitionId": "/subscriptions/{subscription-id}/providers/Microsoft.Authorization/policyDefinitions/dns-port-restriction-policy",
+        "parameters": {
+          "effect": {
+            "value": "Deny"
+          },
+          "allowedSourceAddressPrefix": {
+            "value": "VirtualNetwork"
           }
         }
       }
